@@ -23,6 +23,7 @@ export default function Home() {
 
     return (
         <main>
+            Главная страница
             <div>
                 <Htag tag='h1'>{counter}</Htag>
                 <Button appearance="primary" className="test" arrow='right'>My Button</Button>

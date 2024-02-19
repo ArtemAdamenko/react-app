@@ -23,7 +23,7 @@ export const Rating = ({isEditable = false, rating, setRating, ...props}: IRatin
                       onClick={() => onClick(i + 1)}
                 >
                     <StarIcon
-                        tabindex={isEditable ? 0 : -1}
+                        tabIndex={isEditable ? 0 : -1}
                         onKeyDown={(e: KeyboardEvent<SVGAElement>) => isEditable && handleSpace(i + 1, e)}
                     />
                 </span>
