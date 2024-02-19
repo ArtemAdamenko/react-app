@@ -6,8 +6,9 @@ import {P} from "@/components/P/P";
 import {Tag} from "@/components/Tag/Tag";
 import {useEffect, useState} from "react";
 import {Rating} from "@/components/Rating/Rating";
+import { withLayout } from "@/layout/Layout";
 
-export default function Home() {
+function Home() {
     const [counter, setCounter] = useState<number>(0);
     useEffect(() => {
         console.log('Counter ' + counter);
@@ -22,7 +23,7 @@ export default function Home() {
     const [rating, setRating] = useState<number>(4);
 
     return (
-        <main>
+        <div>
             Главная страница
             <div>
                 <Htag tag='h1'>{counter}</Htag>
@@ -36,6 +37,8 @@ export default function Home() {
                 <Tag size={'m'} color={'grey'}>Medium tag</Tag>
                 <Rating rating={rating} setRating={setRating} isEditable/>
             </div>
-        </main>
+        </div>
     );
 }
+
+export default withLayout(Home);

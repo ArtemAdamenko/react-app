@@ -1,14 +1,14 @@
 import {Metadata} from "next";
 
 export const metadata: Metadata = {
-    title: 'About'
+    title: 'Login'
 };
 
-export default function About() {
+export default function Login() {
 
     return (
         <div>
-            О нас
+            Login
         </div>
     );
 }
