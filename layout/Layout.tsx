@@ -3,19 +3,18 @@ import {ILayoutProps} from "@/layout/Layout.props";
 import {Header} from "@/layout/Header/Header";
 import {Sidebar} from "@/layout/Sidebar/Sidebar";
 import {Footer} from "@/layout/Footer/Footer";
+import styles from '@/layout/Layout.module.css';
 
 export const Layout = ({children}: ILayoutProps): JSX.Element => {
     return (
-        <>
-            <Header/>
-            <div>
-                <Sidebar/>
-                <div>
-                    {children}
-                </div>
+        <div className={styles.wrapper}>
+            <Header className={styles.header}/>
+            <Sidebar className={styles.sidebar}/>
+            <div className={styles.body}>
+                {children}
             </div>
-            <Footer/>
-        </>
+            <Footer className={styles.footer}/>
+        </div>
     );
 };
 
