@@ -7,3 +7,8 @@ export * from './Card/Card';
 export * from '@/components/HhData/HhData';
 export * from '@/components/Advantages/Advantages';
 export * from '@/components/Sort/Sort';
+export * from '@/components/Input/Input';
+export * from '@/components/Textarea/Textarea';
+export * from '@/components/Product/Product';
+export * from '@/components/Divider/Divider';
+export * from '@/components/Review/Review';
