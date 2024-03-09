@@ -287,3 +287,7 @@
         "actions";
     }
 }
+
+.rateTitle a {
+    color: var(--primary);
+}
