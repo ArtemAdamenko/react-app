@@ -4,11 +4,28 @@ import cn from 'classnames';
 import {Button, Card, Divider, Rating, Review, ReviewForm, Tag} from "@/components";
 import {declOfNum, priceRu} from "@/helpers/helpers";
 import Image from "next/image";
-import {useRef, useState} from "react";
+import {ForwardedRef, forwardRef, useRef, useState} from "react";
+import {motion} from 'framer-motion';
 
-export const Product = ({product, className, ...props}: ProductProps): JSX.Element => {
+export const Product = motion(forwardRef(({
+                                              product,
+                                              className,
+                                              ...props
+                                          }: ProductProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
     const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
     const reviewRef = useRef<HTMLDivElement>(null);
+
+    const variants = {
+        visible: {
+            opacity: 1,
+            height: 'auto'
+        },
+        hidden: {
+            opacity: 0,
+            height: 0
+        }
+    };
+
     const scrollToReview = () => {
         setIsReviewOpened(true);
         reviewRef.current?.scrollIntoView({
@@ -18,7 +35,7 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
     };
 
     return (
-        <div className={className} {...props}>
+        <div className={className} {...props} ref={ref}>
             <Card className={styles.product}>
                 <div className={styles.logo}>
                     <Image
@@ -82,20 +99,19 @@ export const Product = ({product, className, ...props}: ProductProps): JSX.Eleme
                     </Button>
                 </div>
             </Card>
-            <Card color={'blue'} className={cn(styles.reviews, {
-                [styles.opened]: isReviewOpened,
-                [styles.closed]: !isReviewOpened
-            })}
-                  ref={reviewRef}
-            >
-                {product.reviews.map(r => (
-                    <div key={r._id}>
-                        <Review review={r}/>
-                        <Divider/>
-                    </div>
-                ))}
-                <ReviewForm productId={product._id}/>
-            </Card>
+            <motion.div animate={isReviewOpened ? 'visible' : 'hidden'} variants={variants} initial={'hidden'}>
+                <Card color={'blue'} className={cn(styles.reviews)}
+                      ref={reviewRef}
+                >
+                    {product.reviews.map(r => (
+                        <div key={r._id}>
+                            <Review review={r}/>
+                            <Divider/>
+                        </div>
+                    ))}
+                    <ReviewForm productId={product._id}/>
+                </Card>
+            </motion.div>
         </div>
     );
-};
+}));

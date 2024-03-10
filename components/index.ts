@@ -13,3 +13,4 @@ export * from '@/components/Product/Product';
 export * from '@/components/Divider/Divider';
 export * from '@/components/Review/Review';
 export * from '@/components/ReviewForm/ReviewForm';
+export * from '@/components/Up/Up';
