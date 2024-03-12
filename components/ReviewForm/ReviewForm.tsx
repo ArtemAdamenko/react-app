@@ -9,8 +9,8 @@ import axios from "axios";
 import {API} from "@/helpers/api";
 import {useState} from "react";
 
-export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): JSX.Element => {
-    const {register, control, handleSubmit, formState: {errors}, reset} = useForm<IReviewForm>();
+export const ReviewForm = ({productId, isOpened, className, ...props}: ReviewFormProps): JSX.Element => {
+    const {register, control, handleSubmit, formState: {errors}, reset, clearErrors} = useForm<IReviewForm>();
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [error, setError] = useState<string>();
     const onSubmit = async (formData: IReviewForm) => {
@@ -35,9 +35,15 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
             <div className={cn(styles.reviewForm, className)} {...props}
             >
                 <Input {...register('name', {required: {value: true, message: 'Fulfill name'}})} placeholder={'Name'}
-                       error={errors.name}/>
+                       error={errors.name}
+                       tabIndex={isOpened ? 0 : -1}
+                       aria-invalid={!!errors.name}
+                />
                 <Input {...register('title', {required: {value: true, message: 'Fulfill title'}})} placeholder={'Title'}
-                       className={styles.title} error={errors.title}/>
+                       className={styles.title} error={errors.title}
+                       tabIndex={isOpened ? 0 : -1}
+                       aria-invalid={!!errors.title}
+                />
                 <div className={styles.rating}>
                     <span>Rate:</span>
                     <Controller control={control} name={'rating'}
@@ -54,25 +60,42 @@ export const ReviewForm = ({productId, className, ...props}: ReviewFormProps): J
                 <Textarea placeholder={'Review text'}
                           {...register('description', {required: {value: true, message: 'Fulfill description'}})}
                           className={styles.description}
-                          error={errors.description}/>
+                          error={errors.description}
+                          tabIndex={isOpened ? 0 : -1}
+                          aria-label='Review text'
+                          aria-invalid={!!errors.description}
+                />
                 <div className={styles.submit}>
-                    <Button appearance={'primary'}>Send</Button>
+                    <Button appearance={'primary'} tabIndex={isOpened ? 0 : -1}
+                            onClick={() => clearErrors()}>Send</Button>
                     <span className={styles.info}>* special text</span>
                 </div>
             </div>
-            {isSuccess && <div className={cn(styles.success, styles.panel)}>
+            {isSuccess && <div className={cn(styles.success, styles.panel)} role='alert'>
                 <div className={styles.successTitle}>
                     Your review sent
                 </div>
                 <div>
                     Thank you!
                 </div>
-                <CloseIcon className={styles.closeIcon} onClick={() => setIsSuccess(false)}/>
+                <button
+                    onClick={() => setIsSuccess(false)}
+                    className={styles.closeIcon}
+                    aria-label='close alert'
+                >
+                    <CloseIcon/>
+                </button>
             </div>
             }
-            {error && <div className={cn(styles.error, styles.panel)}>
+            {error && <div className={cn(styles.error, styles.panel)} role='alert'>
                 {error}
-                <CloseIcon className={styles.closeIcon} onClick={() => setError(undefined)}/>
+                <button
+                    onClick={() => setError(undefined)}
+                    className={styles.closeIcon}
+                    aria-label='close alert'
+                >
+                    <CloseIcon/>
+                </button>
             </div>
             }
         </form>

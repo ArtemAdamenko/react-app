@@ -32,7 +32,10 @@ export const Product = motion(forwardRef(({
             behavior: 'smooth',
             block: 'start'
         });
+        reviewRef.current?.focus();
     };
+
+
 
     return (
         <div className={className} {...props} ref={ref}>
@@ -48,18 +51,25 @@ export const Product = motion(forwardRef(({
                 </div>
                 <div className={styles.title}>{product.title}</div>
                 <div className={styles.price}>
-                    {priceRu(product.price)}
+                    <span><span className={styles.visuallyHidden}>Price</span>{priceRu(product.price)}</span>
                     {product.oldPrice &&
                         <Tag className={styles.oldPrice}
-                             color={'green'}>{priceRu(product.price - product.oldPrice)}</Tag>}
+                             color={'green'}>
+                            <span className={styles.visuallyHidden}>Sale</span>
+                            {priceRu(product.price - product.oldPrice)}
+                        </Tag>}
                 </div>
-                <div className={styles.credit}>{priceRu(product.credit)}/<span className={styles.month}>month</span>
+                <div className={styles.credit}>
+                    <span className={styles.visuallyHidden}>Credit</span>
+                    {priceRu(product.credit)}/<span className={styles.month}>month</span>
                 </div>
-                <div className={styles.rating}><Rating rating={product.reviewAvg ?? product.initialRating}/></div>
+                <div className={styles.rating}>
+                    <span className={styles.visuallyHidden}>{'Rating' + product.reviewAvg ?? product.initialRating}</span>
+                    <Rating rating={product.reviewAvg ?? product.initialRating}/></div>
                 <div className={styles.tags}>{product.categories.map(c => <Tag key={c} color={'ghost'}
                                                                                className={styles.category}>{c}</Tag>)}</div>
-                <div className={styles.priceTitle}>price</div>
-                <div className={styles.creditTitle}>credit</div>
+                <div className={styles.priceTitle} aria-hidden={true}>price</div>
+                <div className={styles.creditTitle} aria-hidden={true}>credit</div>
                 <div
                     className={styles.rateTitle}>
                     <a href={'#ref'}
@@ -94,6 +104,7 @@ export const Product = motion(forwardRef(({
                         arrow={isReviewOpened ? 'down' : 'right'}
                         className={styles.reviewButton}
                         onClick={() => setIsReviewOpened(!isReviewOpened)}
+                        aria-expanded={isReviewOpened}
                     >
                         Read reviews
                     </Button>
@@ -102,6 +113,7 @@ export const Product = motion(forwardRef(({
             <motion.div animate={isReviewOpened ? 'visible' : 'hidden'} variants={variants} initial={'hidden'}>
                 <Card color={'blue'} className={cn(styles.reviews)}
                       ref={reviewRef}
+                      tabIndex={isReviewOpened ? 0 : -1}
                 >
                     {product.reviews.map(r => (
                         <div key={r._id}>
@@ -109,7 +121,7 @@ export const Product = motion(forwardRef(({
                             <Divider/>
                         </div>
                     ))}
-                    <ReviewForm productId={product._id}/>
+                    <ReviewForm productId={product._id} isOpened={isReviewOpened}/>
                 </Card>
             </motion.div>
         </div>

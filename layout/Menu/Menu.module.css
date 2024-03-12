@@ -33,18 +33,30 @@
 
     font-weight: 300;
     line-height: 16px;
+    outline-offset: -1px;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.firstLevelList {
+    list-style: none;
+    padding: 0;
 }
 
 .secondBlock {
     margin-top: 15px;
     margin-left: 12px;
-    padding-left: 32px;
+    padding: 0 0 0 32px;
 
     border-left: 1px solid #DFDFDF;
+    list-style: none;
 }
 
 .secondLevelBlock {
     overflow: hidden;
+    list-style: none;
+    padding: 0;
 }
 
 .thirdLevel {
@@ -58,7 +70,7 @@
 
     font-size: 14px;
     font-weight: 500;
-    line-height: 19px;
+    outline-offset: -1px;
 }
 
 
