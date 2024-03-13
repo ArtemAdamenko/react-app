@@ -117,6 +117,13 @@
     border-left: 2px solid #1DC37E;
 }
 
+.visuallyHidden {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+}
+
 .disadvantages {
     padding-left: 15px;
 

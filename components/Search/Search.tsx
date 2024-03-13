@@ -36,8 +36,9 @@ export const Search = ({className, ...props}: SearchProps): JSX.Element => {
             <Button
                 appearance={'primary'}
                 className={styles.button}
-                onClick={goToSearch}>
-                aria-label='Search by site'
+                onClick={goToSearch}
+                aria-label='Search by site'>
+
                 <SearchIcon/>
             </Button>
         </form>
