@@ -51,7 +51,7 @@ export const Rating = forwardRef(({
                     aria-valuenow={rating}
                     aria-valuemax={5}
                     aria-valuemin={1}
-                    aria-label={isEditable ? 'Set rating' : rating}
+                    // aria-label={isEditable ? 'Set rating' : rating}
                     aria-invalid={!!error}
                 >
 					<StarIcon/>

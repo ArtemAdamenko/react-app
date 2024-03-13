@@ -26,7 +26,7 @@ export const ReviewForm = ({productId, isOpened, className, ...props}: ReviewFor
                 setError('Something wrong');
             }
         } catch (e) {
-            setError(e.message);
+            // setError(e.message);
         }
     };
 

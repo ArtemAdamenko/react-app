@@ -3,13 +3,15 @@ import '../styles/globals.css';
 import Head from 'next/head';
 import React from 'react';
 import ym, {YMInitializer} from "react-yandex-metrika";
+import {Router} from "next/router";
+
+Router.events.on('routeChangeComplete', (url: string) => {
+    if (typeof window !== 'undefined') {
+        ym('hit', url);
+    }
+});
 
 function MyApp({Component, pageProps, router}: AppProps): JSX.Element {
-    router.events.on('routeChangeComplete', (url: string) => {
-        if (typeof window !== 'undefined') {
-            ym('hit', url);
-        }
-    });
     return <>
         <Head>
             <title>MyTop - наш лучший топ</title>
@@ -22,7 +24,7 @@ function MyApp({Component, pageProps, router}: AppProps): JSX.Element {
             <meta property='og:locale' content='RU_ru'/>
 
         </Head>
-        <YMInitializer accounts={[]} options={{ webvisor: true, defer: true}} version="2"/>
+        <YMInitializer accounts={[]} options={{webvisor: true, defer: true}} version="2"/>
         <Component {...pageProps} />
     </>;
 }
